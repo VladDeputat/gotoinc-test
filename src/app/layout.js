@@ -8,13 +8,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
-    <StoreProvider>
-      <html lang="en">
-        <body className={inter.className} suppressHydrationWarning={true}>
+    <html lang="en">
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <StoreProvider>
           <Header />
           {children}
-        </body>
-      </html>
-    </StoreProvider>
+        </StoreProvider>
+      </body>
+    </html>
   );
 }

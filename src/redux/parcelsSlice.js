@@ -1,22 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const parcelsSlice = createSlice({
-  name: 'parcels',
+  name: "parcels",
   initialState: {
-    orders: [],
-    deliveries: [],
+    requests: [],
+    error: "",
   },
   reducers: {
-    createOrder: (state, action) => {
-      state.orders = [...state.orders, action.payload];
+    createRequest: (state, action) => {
+      state.requests = [...state.requests, action.payload];
     },
-    createDelivery: (state, action) => {
-      state.deliveries = [...state.deliveries, action.payload];
+    catchError: (state, action) => {
+      state.error = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { createOrder, createDelivery } = parcelsSlice.actions;
+export const { createRequest, catchError } = parcelsSlice.actions;
 
 export default parcelsSlice.reducer;
