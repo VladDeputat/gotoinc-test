@@ -7,16 +7,22 @@ export const parcelsSlice = createSlice({
     error: "",
   },
   reducers: {
-    createRequest: (state, action) => {
+    createRequestAction: (state, action) => {
       state.requests = [...state.requests, action.payload];
     },
-    catchError: (state, action) => {
+    deleteRequestAction: (state, action) => {
+      state.requests = [
+        ...state.requests.filter((req) => req.requestId !== action.payload),
+      ];
+    },
+    catchErrorAction: (state, action) => {
       state.error = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { createRequest, catchError } = parcelsSlice.actions;
+export const { createRequestAction, deleteRequestAction, catchErrorAction } =
+  parcelsSlice.actions;
 
 export default parcelsSlice.reducer;

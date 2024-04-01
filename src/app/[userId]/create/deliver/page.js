@@ -1,4 +1,4 @@
-import RequestForm from "@/app/components/forms/RequestForm";
+import RequestForm from "@/app/components/RequestForm";
 import Image from "next/image";
 import React from "react";
 

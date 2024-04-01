@@ -1,1 +1,1 @@
-// const getOrdersSelector =(state)=>
+export const getAllRequestsSelector = (state) => state.parcels.requests;
