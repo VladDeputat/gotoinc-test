@@ -112,7 +112,7 @@ const BasicForm = ({ isOrderForm, handleSubmit, initialStateWithData }) => {
         </div>
       )}
       <p className="mb-3">* - required field</p>
-      <button type="submit" className="btn btn-primary float-end btn-lg">
+      <button type="submit" className="btn btn-primary float-end">
         Submit
       </button>
     </form>
