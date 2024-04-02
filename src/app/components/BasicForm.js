@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const BasicForm = ({ isOrderForm, handleSubmit, initialStateWithData }) => {
   const { userId } = useParams();

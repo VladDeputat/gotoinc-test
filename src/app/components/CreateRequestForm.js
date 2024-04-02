@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { enGB } from "date-fns/locale";
-import ReactDatePicker, { registerLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale } from "react-datepicker";
 import { useAppDispatch } from "@/redux/hooks";
 import { crateRequest } from "@/redux/operations";
 import { useParams } from "next/navigation";
