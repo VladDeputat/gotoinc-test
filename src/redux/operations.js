@@ -1,18 +1,32 @@
 import { nanoid } from "nanoid";
 import {
+  setCurrentUserAction,
   createRequestAction,
   deleteRequestAction,
   catchErrorAction,
 } from "./parcelsSlice";
 
+// const convertDate = (timeString) => {
+//   const date = new Date(timeString);
+//   const formattedDate = new Intl.DateTimeFormat("en-GB", {
+//     day: "2-digit",
+//     month: "2-digit",
+//     year: "numeric",
+//   }).format(date);
+//   return formattedDate;
+// };
+
 const convertDate = (timeString) => {
-  const date = new Date(timeString);
-  const formattedDate = new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date);
-  return formattedDate;
+  return new Date(timeString).getTime();
+};
+
+export const setCurrentUser = (userId) => async (dispatch) => {
+  try {
+    dispatch(setCurrentUserAction(userId));
+  } catch (error) {
+    dispatch(catchErrorAction(error.message));
+    console.log(error.message);
+  }
 };
 
 export const crateRequest = (orderData) => async (dispatch) => {

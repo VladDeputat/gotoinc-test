@@ -1,12 +1,13 @@
 "use client";
 
+import { getUserIdSelector } from "@/redux/selectors";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  const { userId } = useParams();
+  const userId = useSelector(getUserIdSelector);
 
   return (
     <header className="bg-dark text-light py-1 position-fixed z-1 w-100 top-0">

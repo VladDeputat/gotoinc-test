@@ -3,10 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const parcelsSlice = createSlice({
   name: "parcels",
   initialState: {
+    curUser: "",
     requests: [],
     error: "",
   },
   reducers: {
+    setCurrentUserAction: (state, action) => {
+      state.curUser = action.payload;
+    },
     createRequestAction: (state, action) => {
       state.requests = [...state.requests, action.payload];
     },
@@ -22,7 +26,11 @@ export const parcelsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { createRequestAction, deleteRequestAction, catchErrorAction } =
-  parcelsSlice.actions;
+export const {
+  setCurrentUserAction,
+  createRequestAction,
+  deleteRequestAction,
+  catchErrorAction,
+} = parcelsSlice.actions;
 
 export default parcelsSlice.reducer;

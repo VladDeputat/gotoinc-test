@@ -1,12 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./page.module.scss";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "@/redux/operations";
 
 const CreatePage = () => {
   const { userId } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setCurrentUser(userId));
+  }, [userId]);
 
   return (
     <main className={s.main}>
