@@ -3,18 +3,8 @@ import {
   setCurrentUserAction,
   createRequestAction,
   deleteRequestAction,
-  catchErrorAction,
+  updateRequestAction,
 } from "./parcelsSlice";
-
-// const convertDate = (timeString) => {
-//   const date = new Date(timeString);
-//   const formattedDate = new Intl.DateTimeFormat("en-GB", {
-//     day: "2-digit",
-//     month: "2-digit",
-//     year: "numeric",
-//   }).format(date);
-//   return formattedDate;
-// };
 
 const convertDate = (timeString) => {
   return new Date(timeString).getTime();
@@ -24,7 +14,6 @@ export const setCurrentUser = (userId) => async (dispatch) => {
   try {
     dispatch(setCurrentUserAction(userId));
   } catch (error) {
-    dispatch(catchErrorAction(error.message));
     console.log(error.message);
   }
 };
@@ -40,7 +29,14 @@ export const crateRequest = (orderData) => async (dispatch) => {
     };
     dispatch(createRequestAction(convertedData));
   } catch (error) {
-    dispatch(catchErrorAction(error.message));
+    console.log(error.message);
+  }
+};
+
+export const updateRequest = (newData) => async (dispatch) => {
+  try {
+    dispatch(updateRequestAction(newData));
+  } catch (error) {
     console.log(error.message);
   }
 };
@@ -49,7 +45,6 @@ export const deleteRequest = (requestId) => async (dispatch) => {
   try {
     dispatch(deleteRequestAction(requestId));
   } catch (error) {
-    dispatch(catchErrorAction(error.message));
     console.log(error.message);
   }
 };

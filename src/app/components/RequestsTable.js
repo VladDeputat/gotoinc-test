@@ -1,39 +1,52 @@
+import { useAppDispatch } from "@/redux/hooks";
 import { deleteRequest } from "@/redux/operations";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 const RequestsTable = ({
   data,
   activeSort,
   setActiveSort,
+  activeRequestData,
   setActiveRequestData,
   setIsModalOpen,
   isUserRequestsTable,
+  setActiveRequestToEdit,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const tabs = ["orders", "deliveries"];
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   const getActiveTabData = () => {
     if (activeTab === "orders") {
       return data.filter(({ requestType }) => requestType === "order");
-    }
-    if (activeTab === "deliveries") {
+    } else if (activeTab === "deliveries") {
       return data.filter(({ requestType }) => requestType === "deliver");
+    } else {
+      return [];
     }
   };
 
-  const columns = [
-    "user id",
-    "from city ",
-    "to city",
-    "parsel type",
-    "created on",
-    "dispatch date",
-    "description",
-    " ",
-  ];
+  const columns =
+    activeTab === "orders"
+      ? [
+          "user id",
+          "from city ",
+          "to city",
+          "parsel type",
+          "created on",
+          "dispatch date",
+          "description",
+          " ",
+        ]
+      : [
+          "user id",
+          "from city ",
+          "to city",
+          "created on",
+          "dispatch date",
+          " ",
+        ];
 
   const handleDelete = (e) => {
     const isDeleteApproved = window.confirm(
@@ -44,9 +57,9 @@ const RequestsTable = ({
     }
   };
 
-  const handleEdit = (e) => {
-    console.log(e.target.id);
-    setActiveRequestIdToEdit(e.target.id);
+  const handleEdit = (e, req) => {
+    e.stopPropagation();
+    setActiveRequestToEdit(req);
     setIsModalOpen(true);
   };
 
@@ -104,6 +117,11 @@ const RequestsTable = ({
             {getActiveTabData().map((req) => (
               <tr
                 key={req.requestId}
+                className={
+                  activeRequestData?.requestId === req.requestId
+                    ? "table-active"
+                    : ""
+                }
                 onClick={
                   isUserRequestsTable
                     ? () => setActiveRequestData(req)
@@ -113,10 +131,10 @@ const RequestsTable = ({
                 <td>{req.userId}</td>
                 <td>{req.fromCity}</td>
                 <td>{req.toCity}</td>
-                <td>{req.parcelType}</td>
+                {activeTab === "orders" && <td>{req.parcelType}</td>}
                 <td>{formatDate(req.createdAt)}</td>
                 <td>{formatDate(req.dispatchDate)}</td>
-                <td>{req.parcelDescription}</td>
+                {activeTab === "orders" && <td>{req.parcelDescription}</td>}
                 <td>
                   {isUserRequestsTable && (
                     <div className="d-flex gap-1" style={{ width: "120px" }}>
@@ -124,7 +142,7 @@ const RequestsTable = ({
                         type="button"
                         className="btn btn-info"
                         id={req.requestId}
-                        onClick={handleEdit}
+                        onClick={(e) => handleEdit(e, req)}
                       >
                         <Image
                           src="/assets/pencil.svg"

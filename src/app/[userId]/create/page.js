@@ -4,12 +4,12 @@ import React, { useEffect } from "react";
 import s from "./page.module.scss";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import { setCurrentUser } from "@/redux/operations";
+import { useAppDispatch } from "@/redux/hooks";
 
 const CreatePage = () => {
   const { userId } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setCurrentUser(userId));

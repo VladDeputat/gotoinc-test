@@ -1,21 +1,22 @@
 "use client";
 import Modal from "@/app/components/Modal";
-import RequestForm from "@/app/components/CreateRequestForm";
 import RequestsTable from "@/app/components/RequestsTable";
 import { getAllRequestsSelector } from "@/redux/selectors";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import BasicForm from "@/app/components/BasicForm";
+import EditRequestForm from "@/app/components/EditRequestForm";
+import { updateRequest } from "@/redux/operations";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const UserRequestsPage = () => {
+  const dispatch = useAppDispatch();
   const { userId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [activeRequestIdToEdit, setActiveRequestIdToEdit] = useState("");
+  const [activeRequestToEdit, setActiveRequestToEdit] = useState(null);
   const [activeRequestData, setActiveRequestData] = useState(null);
   const [requestsToSuggest, setRequestsToSuggest] = useState([]);
 
-  const allRequestsData = useSelector(getAllRequestsSelector);
+  const allRequestsData = useAppSelector(getAllRequestsSelector);
   const usersRequests = allRequestsData.filter((req) => req.userId === userId);
 
   useEffect(() => {
@@ -35,7 +36,8 @@ const UserRequestsPage = () => {
   }, [activeRequestData]);
 
   const handleSaveEdit = (dataAfterEdit) => {
-    console.log(dataAfterEdit);
+    dispatch(updateRequest(dataAfterEdit));
+    setIsModalOpen(false);
   };
 
   return (
@@ -45,25 +47,27 @@ const UserRequestsPage = () => {
         <RequestsTable
           data={usersRequests}
           setActiveRequestData={setActiveRequestData}
+          activeRequestData={activeRequestData}
+          setActiveRequestToEdit={setActiveRequestToEdit}
           setIsModalOpen={setIsModalOpen}
           isUserRequestsTable
         />
-        {!requestsToSuggest.length > 0 ? (
-          <p>Click on list</p>
-        ) : (
-          <RequestsTable
-            data={requestsToSuggest}
-            // setActiveRequestData={setActiveRequestData}
-            // setIsModalOpen={setIsModalOpen}
-            // isUserRequestsTable={false}
-          />
+        {!requestsToSuggest.length > 0 && !activeRequestData && (
+          <p>Click on list to see suggested requests</p>
         )}
+        {!requestsToSuggest.length > 0 && activeRequestData && (
+          <p>No suggested requests yet</p>
+        )}
+        {requestsToSuggest.length > 0 && activeRequestData && (
+          <RequestsTable data={requestsToSuggest} />
+        )}
+
         {isModalOpen && (
           <Modal setIsModalOpen={setIsModalOpen}>
-            <BasicForm
+            <EditRequestForm
               isOrderForm={true}
               handleSubmit={handleSaveEdit}
-              initialStateWithData={initialStateForEdit}
+              activeRequestToEdit={activeRequestToEdit}
             />
           </Modal>
         )}

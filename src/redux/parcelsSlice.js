@@ -5,32 +5,33 @@ export const parcelsSlice = createSlice({
   initialState: {
     curUser: "",
     requests: [],
-    error: "",
   },
   reducers: {
-    setCurrentUserAction: (state, action) => {
-      state.curUser = action.payload;
+    setCurrentUserAction: (state, { payload }) => {
+      state.curUser = payload;
     },
-    createRequestAction: (state, action) => {
-      state.requests = [...state.requests, action.payload];
+    createRequestAction: (state, { payload }) => {
+      state.requests = [...state.requests, payload];
     },
-    deleteRequestAction: (state, action) => {
+    updateRequestAction: (state, { payload }) => {
+      const updatedReqArray = state.requests.map((item) =>
+        item.requestId === payload.requestId ? { ...item, ...payload } : item,
+      );
+      state.requests = updatedReqArray;
+    },
+    deleteRequestAction: (state, { payload }) => {
       state.requests = [
-        ...state.requests.filter((req) => req.requestId !== action.payload),
+        ...state.requests.filter((req) => req.requestId !== payload),
       ];
-    },
-    catchErrorAction: (state, action) => {
-      state.error = action.payload;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   setCurrentUserAction,
   createRequestAction,
   deleteRequestAction,
-  catchErrorAction,
+  updateRequestAction,
 } = parcelsSlice.actions;
 
 export default parcelsSlice.reducer;

@@ -1,13 +1,13 @@
 "use client";
 
+import { useAppSelector } from "@/redux/hooks";
 import { getUserIdSelector } from "@/redux/selectors";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const Header = () => {
-  const userId = useSelector(getUserIdSelector);
+  const userId = useAppSelector(getUserIdSelector);
 
   return (
     <header className="bg-dark text-light py-1 position-fixed z-1 w-100 top-0">
@@ -20,6 +20,7 @@ const Header = () => {
               className="logo"
               width={60}
               height={60}
+              style={{ width: "60px", height: "60px" }}
             />
             <Link href="/">
               <p className="ms-2" style={{ fontSize: "30px", fontWeight: 700 }}>
@@ -32,6 +33,15 @@ const Header = () => {
               <div className="container-fluid">
                 <div className="collapse navbar-collapse" id="navbarNav">
                   <ul className="navbar-nav">
+                    <li className="nav-item">
+                      <Link
+                        className="nav-link"
+                        aria-current="page"
+                        href={`/${userId}/create`}
+                      >
+                        Create request
+                      </Link>
+                    </li>
                     <li className="nav-item">
                       <Link
                         className="nav-link"

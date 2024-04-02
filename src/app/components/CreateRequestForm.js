@@ -25,20 +25,8 @@ const RequestForm = ({ isOrderForm }) => {
     userId: userId,
   };
 
-  // const [formData, setFormData] = useState(initialState);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
-
   const handleCreateSubmit = (formData) => {
-    // e.preventDefault();
     dispatch(crateRequest(formData));
-    // setFormData(initialState);
   };
 
   return (
@@ -46,7 +34,6 @@ const RequestForm = ({ isOrderForm }) => {
       <h1 style={{ fontSize: "40px" }}>
         {isOrderForm ? "Create Order Request" : "Create Delivery Request"}
       </h1>
-
       <BasicForm
         isOrderForm={isOrderForm}
         handleSubmit={handleCreateSubmit}
